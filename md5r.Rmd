@@ -1,6 +1,8 @@
 ---
 title: "MD5 in R"
-output: html_notebook
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 For years I have used the MD5 algorithm to hash ID's for randomization when running A/B tests.  I know what MD5 does but not how!  Here I reproduce the algorithm in order to gain understanding.  The MD5 algorithm is already implemented in the `digest` package - this notebook is purely for learning.  
