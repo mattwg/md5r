@@ -32,6 +32,7 @@ Let's convert our message to bits:
 ```{r}
 msg_bits <- rawToBits(charToRaw(msg))
 ```
+
 Our message in bits is (`r msg_bits`) and the length of the message in bits is `r length(msg_bits)`.
 
 
