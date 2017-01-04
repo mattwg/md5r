@@ -31,8 +31,25 @@ MD5 can operate with messages of any lengths but always returns a 128 bit messag
 Let's convert our message to bits:
 ```{r}
 msg_bits <- rawToBits(charToRaw(msg))
+n_orig_bits <- length(msg_bits)
 ```
 
-Our message in bits is (`r msg_bits`) and the length of the message in bits is `r length(msg_bits)`.
+Our message in bits is now (`r msg_bits`) and the length of the message in bits is `r length(msg_bits)`.
 
+We now perform the padding.  First we add a bit - the message is now 97 bits long.  We need to pad to 448 bits - that is `448-97` zeros.
+
+```{r}
+msg_bits <- c(msg_bits, as.raw(1), rep(as.raw(0),351))
+```
+Our message in bits is now (`r msg_bits`) and the length of the message in bits is `r length(msg_bits)`.
+
+Now we need to append an additional 64 bits which encode the length of the original message in bits (`r n_orig_bits`), lowest byte first.
+
+```{r}
+length_bits <- intToBits(96)
+n <- length(length_bits)
+# For R integers this will be less than 64 bits
+msg_bits <- c(msg_bits, length_bits, rep(as.raw(0), 64-n))
+```
+Our message in bits is now (`r msg_bits`) and the length of the message in bits is `r length(msg_bits)`. The modulo of the message length and 512 is `r length(msg_bits) %% 512`.  We are now good to go to the next step - the message processing.
 
